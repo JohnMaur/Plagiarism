@@ -4,7 +4,7 @@ import { originality, credibility, safeguard } from "../assets/icons"
 
 const BenefitsOFPlagiarism = () => {
   return (
-    <div className="padding-x pt-24">
+    <div className="lg:padding-x pt-24 max-md:px-5">
       <h1 className="text-center mt-5 text-5xl font-bold max-md:text-3xl  text-gray-700">Plagiarism Checker Benefits</h1>
 
       <div className="flex gap-10 mt-24 max-md:flex-col">
