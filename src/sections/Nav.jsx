@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { navLinks } from "../constant";
 import { hamburgerIcon } from "../assets/icons";
+import { Link } from "react-router-dom"; // import Link
 
 const Nav = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -19,12 +20,12 @@ const Nav = () => {
         <ul className="flex flex-1 justify-end items-center gap-16 max-lg:hidden">
           {navLinks.map((item) => (
             <li key={item.label}>
-              <a
-                href={item.href}
+              <Link
+                to={item.href} // use Link component instead of <a>
                 className="leading-normal text-lg text-slate-gray font-semibold hover:text-blue-600 active:opacity-45"
               >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -49,14 +50,13 @@ const Nav = () => {
               {navLinks.map((item) => (
                 <li key={item.label}>
                   <div className="hover:bg-slate-300 active:opacity-45 cursor-pointer p-3 rounded-lg">
-                    <a
-                      href={item.href}
+                    <Link
+                      to={item.href} // use Link here as well
                       className="leading-normal text-lg text-slate-gray font-semibold"
                     >
                       {item.label}
-                    </a>
+                    </Link>
                   </div>
-
                 </li>
               ))}
             </ul>

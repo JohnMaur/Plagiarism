@@ -1,6 +1,6 @@
-const IconButton = ({ icon, iconText, iconName }) => {
+const IconButton = ({ icon, iconText, iconName, onClick }) => {
   return (
-    <div className={`icon-style`}>
+    <div className="icon-style" onClick={onClick}>
       <img
         src={icon}
         alt={iconName}
@@ -8,7 +8,7 @@ const IconButton = ({ icon, iconText, iconName }) => {
       />
       <p className="text-gray-500 font-semibold mt-[4px] text-base">{iconText}</p>
     </div>
-  )
-}
+  );
+};
 
-export default IconButton
+export default IconButton;

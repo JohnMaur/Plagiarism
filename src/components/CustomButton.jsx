@@ -1,11 +1,13 @@
-const CustomButton = ({ customStyle }) => {
+const CustomButton = ({ customStyle, textStyle, text, image, onClick }) => {
   return (
-    <div>
-      <button className={`${customStyle} py-2.5 px-5 text-white font-semibold rounded-full`}>
-        Check for Plagiarism
-      </button>
-    </div>
-  )
-}
+    <button
+      className={`${customStyle} ${textStyle} py-2.5 px-5 font-semibold rounded-full flex justify-center items-center gap-2`}
+      onClick={onClick} // Pass the onClick handler
+    >
+      {image ? <img src={image} className="w-3 h-3" /> : null}
+      {text}
+    </button>
+  );
+};
 
-export default CustomButton
+export default CustomButton;
