@@ -13,3 +13,13 @@
     @apply w-36 h-[5rem] bg-white flex justify-center items-center flex-col rounded-md border-solid border-[1px] border-gray-300 cursor-pointer active:opacity-45 hover:bg-gray-100;
   }
 }
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}

@@ -7,6 +7,8 @@ import safeguard from "./safeguard.png"
 import close from "./close.png"
 import file from "./file.png"
 import gmail from "./gmail.png"
+import profile from "./profile.png"
+import logout from "./logout.png"
 
 export {
   hamburgerIcon,
@@ -18,4 +20,6 @@ export {
   close,
   file,
   gmail,
+  profile,
+  logout,
 }

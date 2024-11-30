@@ -1,13 +1,15 @@
 import IconButton from "./IconButton";
 import CustomButton from "./CustomButton";
 import PlagiarismBenefit from "./PlagiarismBenefit";
-import Textinput from "./Textinput";
+import TextInput from "./Textinput";
 import ContinueWithGmail from "./ContinueWithGmail";
+import Modal from "./Modal";
 
 export {
   IconButton,
   CustomButton,
   PlagiarismBenefit,
-  Textinput,
+  TextInput,
   ContinueWithGmail,
+  Modal,
 }

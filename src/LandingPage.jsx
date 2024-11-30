@@ -1,10 +1,8 @@
 import { BenefitsOFPlagiarism, Nav, Plagiarism, Titlepage } from "./sections"
 
 const LandingPage = () => {
-  return (
-    <main className="pb-24">
-			<Nav />
-
+	return (
+		<main className="pb-24">
 			<section>
 				<Titlepage />
 			</section>
@@ -16,8 +14,8 @@ const LandingPage = () => {
 			<section>
 				<BenefitsOFPlagiarism />
 			</section>
-    </main>
-  )
+		</main>
+	)
 }
 
 export default LandingPage

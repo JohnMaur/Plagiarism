@@ -10,9 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "antd": "^5.22.2",
     "axios": "^1.7.7",
     "chart.js": "^4.4.6",
     "docx-parser": "^0.2.1",
+    "mammoth": "^1.8.0",
+    "pdf-lib": "^1.17.1",
     "pdfjs-dist": "^4.8.69",
     "plagiarism-checker": "^4.1.0",
     "react": "^18.3.1",
