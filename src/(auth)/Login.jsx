@@ -26,7 +26,7 @@ const Login = () => {
       if (response.status === 200) {
         const { token } = response.data; // Extract token
         login(username, token); // Pass token to context
-        navigate("/plagiarism-checker"); 
+        navigate("/"); 
       }
     } catch (error) {
       setError("Invalid username or password");
