@@ -26,7 +26,7 @@ const Nav = () => {
 
   return (
     <header className="bg-white py-8 fixed z-10 w-full lg:padding-x shadow-sm">
-      <nav className="flex justify-between max-sm:justify-endx">
+      <nav className="flex justify-between max-sm:justify-end">
         {/* Logo */}
         <Link
           to="/"
