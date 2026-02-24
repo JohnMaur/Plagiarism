@@ -21,7 +21,7 @@ const Nav = () => {
 
   const handleLogout = () => {
     logout();
-    navigate("/plagiarism-checker");
+    navigate("/");
   };
 
   return (
@@ -29,7 +29,7 @@ const Nav = () => {
       <nav className="flex justify-between max-sm:justify-end">
         {/* Logo */}
         <Link
-          to="/plagiarism-checker"
+          to="/"
           className="flex items-center gap-2 max-lg:px-10 cursor-pointer max-sm:hidden"
         >
           <div className="p-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
@@ -48,7 +48,7 @@ const Nav = () => {
         {user ? (
           <div className="flex flex-1 justify-end items-center gap-16 max-lg:hidden">
             <Link
-              to="/plagiarism-checker"
+              to="/"
               className="leading-normal text-lg text-slate-gray font-semibold hover:text-blue-600 active:opacity-45"
             >
               Plagiarism Checker
@@ -139,7 +139,7 @@ const Nav = () => {
                 </li>
                 <li className="p-3 text-sm text-slate-600 cursor-pointer hover:bg-slate-200 rounded-lg">
                   <Link
-                    to="/plagiarism-checker"
+                    to="/"
                     className="flex items-center gap-2"
                     onClick={closeDropdown}
                   >
