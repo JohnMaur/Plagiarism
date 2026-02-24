@@ -32,24 +32,31 @@ const Plagiarism = () => {
     }
 
     setLoading(true);
-    const payload = { text };
+    const formData = new FormData();
+
+    if (text) {
+      formData.append("text", text);
+    }
+
+    if (selectedFile) {
+      formData.append("file", selectedFile);
+    }
 
     try {
-      const response = await fetch("http://localhost:5000/check-plagiarism", {
+      const response = await fetch("https://plagiarism-tf-idf-2-24-26.onrender.com/check-plagiarism", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
+        body: formData,
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'An unknown error occurred.');
+        throw new Error(errorData.error || "An unknown error occurred.");
       }
 
       const data = await response.json();
       setPlagiarismResult(data);
     } catch (error) {
-      console.error("Error checking plagiarism:", error);
+      console.error("Error checking plagiarism:", error); 
       alert(error.message); // Display the error message to the user
     } finally {
       setLoading(false);
@@ -63,10 +70,26 @@ const Plagiarism = () => {
     setPlagiarismResult(null);
   };
 
+  // Determine final result for coloring
+  const finalResult = plagiarismResult
+    ? plagiarismResult.semanticFlag || Number(plagiarismResult.plagiarismPercentage) >= 50
+      ? "Plagarized"
+      : "Original"
+    : null;
+
+  const labelColor = finalResult === "Plagarized" ? "text-red-700" : "text-green-700";
+  const barColor = finalResult === "Plagarized" ? "bg-red-600" : "bg-green-600";
+
+  // For Original text, invert the progress bar 
+  const displayPercentage =
+    finalResult === "Original"
+      ? 50 + (100 - Number(plagiarismResult.plagiarismPercentage)) / 2
+      : plagiarismResult?.plagiarismPercentage;
+
   return (
     <div className="pt-24 lg:padding-x flex max-lg:flex-col gap-10 max-lg:w-full max-lg:px-5">
       <div
-        className={`lg:w-[38rem] lg:h-[26.4m] ${text || selectedFile ? "bg-white" : "bg-slate-200"} rounded-[30px] border-[1px] border-solid border-slate-300 ${loading ? "opacity-45" : "opacity-100"}`}
+        className={`w-[38rem] max-lg:w-full xl:w-3/5 h-[26.4m] ${text || selectedFile ? "bg-white" : "bg-slate-200"} rounded-[30px] border-[1px] border-solid border-slate-300 ${loading ? "opacity-45" : "opacity-100"}`}
       >
         <div className="pt-5 px-5">
           {!selectedFile ? <textarea
@@ -106,7 +129,7 @@ const Plagiarism = () => {
             <p className="text-gray-500 font-semibold mt-[4px] text-base">Upload File</p>
             <input
               type="file"
-              accept=".txt, .pdf, .doc, .docx"
+              accept=".txt, .pdf, .doc, .docx, .jpg, .jpeg, .png"
               onChange={handleFileChange}
               className="hidden"
             />
@@ -125,19 +148,38 @@ const Plagiarism = () => {
           ) : null}
 
           <CustomButton
-            customStyle={`${text ? "bg-[#242693]" : "bg-[#ABABAB]"} hover:bg-[#24267E] active:opacity-80`}
+            customStyle={`${text || selectedFile ? "bg-[#242693]" : "bg-[#ABABAB]"} ${!text && !selectedFile ? "bg-[#ABABAB] cursor-not-allowed" : "hover:bg-[#24267E] active:opacity-80 cursor-pointer"}`}
             textStyle="text-white max-sm:text-xs"
             text={loading ? 'Checking...' : 'Check for Plagiarism'}
             onClick={handleCheckPlagiarism}
+            disabled={!text && !selectedFile}
           />
         </div>
       </div>
 
       <div className="flex flex-col">
-        <p className="text-2xl font-semibold p-2">
-          {plagiarismResult ? `${plagiarismResult.plagiarismPercentage}% Plagiarized Content` : ""}
-        </p>
-        <div className="w-[28rem] h-[20rem] border-[1px] max-sm:w-full py-4 px-5 border-solid border-slate-300 shadow-sm rounded-[30px] overflow-y-auto">
+        <div className="p-2 mb-1">
+          {plagiarismResult && (
+            <>
+              <p className="text-2xl font-semibold">
+                {finalResult === "Original"
+                  ? `${displayPercentage.toFixed(2)}% Original`
+                  : `${plagiarismResult.plagiarismPercentage}% Plagiarized`}
+              </p>
+
+              {/* Manual Progress Bar */}
+              <div className="w-full h-3 bg-gray-200 rounded-lg overflow-hidden">
+                <div
+                  className={`${barColor} h-3 rounded-lg`}
+                  style={{ width: `${displayPercentage}%` }}
+                />
+              </div>
+            </>
+          )}
+
+        </div>
+
+        <div className="w-[28rem] lg:w-[22rem] max-md:w-full xl:w-[34rem] h-[20rem] border-[1px] max-sm:w-full py-4 px-5 border-solid border-slate-300 shadow-sm rounded-[30px] overflow-y-auto">
           {loading ? (
             <div className="flex justify-center items-center h-full">
               <div className="w-8 h-8 border-4 border-blue-600 border-solid border-t-transparent rounded-full animate-spin"></div>
@@ -164,7 +206,7 @@ const Plagiarism = () => {
 
       </div>
 
-    </div>
+    </div >
   );
 };
 

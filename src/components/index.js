@@ -4,6 +4,8 @@ import PlagiarismBenefit from "./PlagiarismBenefit";
 import TextInput from "./Textinput";
 import ContinueWithGmail from "./ContinueWithGmail";
 import Modal from "./Modal";
+import ProgressBar from "./ProgressBar";
+import ProfileLayout from "./ProfileLayout";
 
 export {
   IconButton,
@@ -12,4 +14,6 @@ export {
   TextInput,
   ContinueWithGmail,
   Modal,
+  ProgressBar,
+  ProfileLayout
 }

@@ -11,15 +11,16 @@ const SignUp = () => {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [modalVisible, setModalVisible] = useState(false); // Track modal visibility
-  const [modalType, setModalType] = useState(''); // Success or Error type
+  const [modalVisible, setModalVisible] = useState(false); 
+  const [modalType, setModalType] = useState(''); 
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate(); // Initialize the navigate function
 
   const openModal = (type, message) => {
-    setModalType(type); // Set the modal type (success or error)
-    setMessage(message); // Set the message to display
-    setModalVisible(true); // Show the modal
+    setModalType(type); 
+    setMessage(message); 
+    setModalVisible(true); 
   };
 
   const handleSubmit = async (e) => {
@@ -27,17 +28,17 @@ const SignUp = () => {
 
     if (password !== confirmPassword) {
       const errorMessage = 'Passwords do not match.';
-      openModal('error', errorMessage); // Show error modal
+      openModal('error', errorMessage); 
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:3000/api/signup', {
+      const response = await axios.post('https://plagiarism-database-connection-2-24-26.onrender.com/api/signup', {
         username,
         password,
       });
       const successMessage = response.data.message;
-      openModal('success', successMessage); // Show success modal
+      openModal('success', successMessage); 
 
       // Clear input fields after success
       setUsername('');
@@ -47,12 +48,14 @@ const SignUp = () => {
       const { token } = response.data; // Extract token
       login(username, token); // Pass token to context
       setTimeout(() => {
-        navigate('/plagiarism-checker'); // Navigate to plagiarism checker
-      }, 1500); // Optional delay to allow user to see the success message
+        navigate('/plagiarism-checker');
+      }, 1500); 
     } catch (error) {
       const errorMessage =
         error.response?.data?.message || 'An error occurred. Please try again.';
-      openModal('error', errorMessage); // Show error modal
+      openModal('error', errorMessage); 
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -70,7 +73,9 @@ const SignUp = () => {
           {/* Name Input */}
           <TextInput
             label="Username"
+            textStyle="text-gray-600"
             placeholder="Username"
+            borderColor="border-gray-300"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -79,7 +84,9 @@ const SignUp = () => {
           {/* Password Input */}
           <TextInput
             label="Password"
+            textStyle="text-gray-600"
             placeholder="Password"
+            borderColor="border-gray-300"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -97,9 +104,14 @@ const SignUp = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={loading} 
+            className={`w-full text-white py-2 rounded-lg focus:outline-none focus:ring-2 ${
+              loading
+                ? "bg-blue-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600 focus:ring-blue-500"
+            }`}
           >
-            Sign Up
+            {loading ? "Loading..." : "Sign Up"}
           </button>
         </form>
 

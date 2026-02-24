@@ -8,7 +8,9 @@ import close from "./close.png"
 import file from "./file.png"
 import gmail from "./gmail.png"
 import profile from "./profile.png"
-import logout from "./logout.png"
+import logoutIcon from "./logout.png"
+import edit from "./edit.png"
+import plagiarizeIcon from "./plagiarize_icon.png"
 
 export {
   hamburgerIcon,
@@ -21,5 +23,7 @@ export {
   file,
   gmail,
   profile,
-  logout,
+  logoutIcon,
+  edit, 
+  plagiarizeIcon
 }

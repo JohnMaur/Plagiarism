@@ -8,14 +8,17 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { login } = useUser(); // Use login from context
-  const navigate = useNavigate(); // Hook for navigation
+  const [loading, setLoading] = useState(false); 
+  const { login } = useUser(); 
+  const navigate = useNavigate(); 
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true); // Start loading
+    setError(""); // Clear any previous errors
     try {
       // Send login request to backend API
-      const response = await axios.post("http://localhost:3000/api/login", {
+      const response = await axios.post("https://plagiarism-database-connection-2-24-26.onrender.com/api/login", {
         username,
         password,
       });
@@ -23,10 +26,12 @@ const Login = () => {
       if (response.status === 200) {
         const { token } = response.data; // Extract token
         login(username, token); // Pass token to context
-        navigate("/plagiarism-checker"); // Redirect to plagiarism checker page
+        navigate("/plagiarism-checker"); 
       }
     } catch (error) {
       setError("Invalid username or password");
+    } finally {
+      setLoading(false); 
     }
   };
 
@@ -39,7 +44,9 @@ const Login = () => {
           {/* Name Input */}
           <TextInput
             label="Username"
+            textStyle="text-gray-600"
             placeholder="Username"
+            borderColor="border-gray-300"
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -48,7 +55,9 @@ const Login = () => {
           {/* Password Input */}
           <TextInput
             label="Password"
+            textStyle="text-gray-600"
             placeholder="Password"
+            borderColor="border-gray-300"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -59,9 +68,14 @@ const Login = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            disabled={loading} // Disable button while loading
+            className={`w-full text-white py-2 rounded-lg focus:outline-none focus:ring-2 ${
+              loading
+                ? "bg-blue-500 cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-600 focus:ring-blue-500"
+            }`}
           >
-            Login
+            {loading ? "Logging in..." : "Login"}
           </button>
         </form>
 

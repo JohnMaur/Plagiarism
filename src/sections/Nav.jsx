@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { navLinks } from "../constant";
-import { hamburgerIcon, profile, logout } from "../assets/icons";
+import { hamburgerIcon, profile, logoutIcon, plagiarizeIcon } from "../assets/icons";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useUser } from "../(auth)/UserContext";
 
 const Nav = () => {
   const { user, logout } = useUser();
+  const navigate = useNavigate();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -18,14 +20,29 @@ const Nav = () => {
   };
 
   const handleLogout = () => {
-    logout(); // Call logout function from context
+    logout();
+    navigate("/plagiarism-checker");
   };
 
   return (
     <header className="bg-white py-8 fixed z-10 w-full lg:padding-x shadow-sm">
-      <nav className="flex justify-between">
+      <nav className="flex justify-between max-sm:justify-end">
         {/* Logo */}
-        <div className="max-lg:px-10">LOGO</div>
+        <Link
+          to="/plagiarism-checker"
+          className="flex items-center gap-2 max-lg:px-10 cursor-pointer max-sm:hidden"
+        >
+          <div className="p-2 bg-blue-50 rounded-lg hover:bg-blue-100 transition">
+            <img
+              src={plagiarizeIcon}
+              alt="Plagiarism Checker Logo"
+              className="w-6 h-6"
+            />
+          </div>
+          <span className="text-lg font-bold text-slate-800 max-sm:hidden">
+            PlagCheck
+          </span>
+        </Link>
 
         {/* Nav Links (visible on large screens) */}
         {user ? (
@@ -57,7 +74,7 @@ const Nav = () => {
                     <Link
                       to="/profile"
                       className="flex items-center gap-2"
-                      onClick={closeDropdown} // Close dropdown on navigation
+                      onClick={closeDropdown}
                     >
                       <img src={profile} alt="Profile Icon" className="w-4 h-4" />
                       Profile
@@ -70,7 +87,7 @@ const Nav = () => {
                       closeDropdown();
                     }}
                   >
-                    <img src={logout} alt="Logout Icon" className="w-4 h-4" />
+                    <img src={logoutIcon} alt="Logout Icon" className="w-4 h-4" />
                     Logout
                   </li>
                 </ul>
@@ -114,10 +131,20 @@ const Nav = () => {
                   <Link
                     to="/profile"
                     className="flex items-center gap-2"
-                    onClick={closeDropdown} // Close dropdown on navigation
+                    onClick={closeDropdown}
                   >
                     <img src={profile} alt="Profile Icon" className="w-4 h-4" />
                     Profile
+                  </Link>
+                </li>
+                <li className="p-3 text-sm text-slate-600 cursor-pointer hover:bg-slate-200 rounded-lg">
+                  <Link
+                    to="/plagiarism-checker"
+                    className="flex items-center gap-2"
+                    onClick={closeDropdown}
+                  >
+                    <img src={plagiarizeIcon} alt="Profile Icon" className="w-4 h-4" />
+                    Plagiarism Checker
                   </Link>
                 </li>
                 <li
@@ -127,7 +154,7 @@ const Nav = () => {
                     closeDropdown();
                   }}
                 >
-                  <img src={logout} alt="Logout Icon" className="w-4 h-4" />
+                  <img src={logoutIcon} alt="Logout Icon" className="w-4 h-4" />
                   Logout
                 </li>
               </ul>
@@ -140,7 +167,7 @@ const Nav = () => {
                   <Link
                     to={item.href}
                     className="leading-normal text-lg text-slate-gray font-semibold rounded-lg w-full hover:bg-slate-300 active:opacity-45 cursor-pointer p-3"
-                    onClick={closeDropdown} // Close dropdown on navigation
+                    onClick={closeDropdown}
                   >
                     {item.label}
                   </Link>
